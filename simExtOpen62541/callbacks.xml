@@ -1,0 +1,1724 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<?xml-stylesheet type="text/xsl" href="callbacks.xsl"?>
+
+<plugin name="Open62541Wrapper" short-name="Open62541" author="niki.aigner@gmail.com">
+    <description>An example plugin to demonstrate the usage of libPlugin</description>
+    <!-- "backwardscompatibility"-->
+    <command name="test">
+        <description>Do something not much useful.</description>
+        <params>
+            <param name="a" type="int">
+                <description>An integer argument</description>
+            </param>
+            <param name="b" type="string">
+                <description>An string argument</description>
+            </param>
+            <param name="c" type="table" item-type="float">
+                <description>A vector of floats</description>
+            </param>
+        </params>
+        <return>
+            <param name="x" type="float">
+                <description>A float return value</description>
+            </param>
+            <param name="y" type="string">
+                <description>A string return value</description>
+            </param>
+        </return>
+    </command>
+
+    <!-- client management-->
+    <command name="createClient">
+        <description>Init new client</description>
+        <params>
+            <param name="address" type="string">
+                <description>Server URL (full addr. inc. port)</description>
+            </param>
+            <param name="timeout" type="int">
+                <description>Timeout in [ms]</description>
+            </param>
+        </params>
+        <return>
+            <param name="handle" type="string" default="">
+                <description>Handle for new client</description>
+            </param>
+            <param name="success" type="int">
+                <description>return potential error code</description>
+            </param>
+        </return>
+
+    </command>
+
+    <command name="createClientUPW">
+        <description>Init new client with user/password authentication</description>
+        <params>
+            <param name="address" type="string">
+                <description>Server URL (full add. inc. port)</description>
+            </param>
+            <param name="timeout" type="int">
+                <description>Timeout in [ms]</description>
+            </param>
+            <param name="user" type="string">
+                <description>username</description>
+            </param>
+            <param name="password" type="string">
+                <description>password</description>
+            </param>
+        </params>
+        <return>
+            <param name="handle" type="string" default="">
+                <description>Handle for new client</description>
+            </param>
+            <param name="success" type="int">
+                <description>return potential error code</description>
+            </param>
+        </return>
+
+    </command>
+
+    <command name="destroyClient">
+        <description>disconnects and deletes a client</description>
+        <params>
+            <param name="handle" type="string">
+                <description>client handle</description>
+            </param>
+        </params>
+        <return>
+            <param name="success" type="int">
+                <description>return error/success</description>
+            </param>
+        </return>
+    </command>
+
+    <!-- READ VALUES-->
+    <!-- by STRING node ID-->
+    <command name="readStringValueByStringID">
+        <description>read string value from node</description>
+        <params>
+            <param name="handle" type="string">
+                <description>client handle</description>
+            </param>
+            <param name="ns" type="int">
+                <description>namespace by ID</description>
+            </param>
+            <param name="id" type="string">
+                <description>string node ID</description>
+            </param>
+        </params>
+        <return>
+            <param name="value" type="string">
+                <description>return value</description>
+            </param>
+            <param name="success" type="int">
+                <description>return error/success</description>
+            </param>
+        </return>
+    </command>
+
+    <command name="readIntValueByStringID">
+        <description>read int value from node</description>
+        <params>
+            <param name="handle" type="string">
+                <description>client handle</description>
+            </param>
+            <param name="ns" type="int">
+                <description>namespace by ID</description>
+            </param>
+            <param name="id" type="string">
+                <description>string node ID</description>
+            </param>
+        </params>
+        <return>
+            <param name="value" type="int">
+                <description>return value</description>
+            </param>
+            <param name="success" type="int">
+                <description>return error/success</description>
+            </param>
+        </return>
+    </command>
+
+    <command name="readFloatValueByStringID">
+        <description>read float value from node</description>
+        <params>
+            <param name="handle" type="string">
+                <description>client handle</description>
+            </param>
+            <param name="ns" type="int">
+                <description>namespace by ID</description>
+            </param>
+            <param name="id" type="string">
+                <description>string node ID</description>
+            </param>
+        </params>
+        <return>
+            <param name="value" type="float">
+                <description>return value</description>
+            </param>
+            <param name="success" type="int">
+                <description>return error/success</description>
+            </param>
+        </return>
+    </command>
+
+<command name="readStringArrayByStringID">
+        <description>read array of string from node</description>
+        <params>
+            <param name="handle" type="string">
+                <description>client handle</description>
+            </param>
+            <param name="ns" type="int">
+                <description>namespace by ID</description>
+            </param>
+            <param name="id" type="string">
+                <description>string node ID</description>
+            </param>
+        </params>
+        <return>
+            <param name="value" type="table" item-type="string">
+                <description>return value</description>
+            </param>
+            <param name="success" type="int">
+                <description>return error/success</description>
+            </param>
+        </return>
+    </command>
+
+    <command name="readIntArrayByStringID">
+        <description>read array of int from node</description>
+        <params>
+            <param name="handle" type="string">
+                <description>client handle</description>
+            </param>
+            <param name="ns" type="int">
+                <description>namespace by ID</description>
+            </param>
+            <param name="id" type="string">
+                <description>string node ID</description>
+            </param>
+        </params>
+        <return>
+            <param name="value" type="table" item-type="int">
+                <description>return value</description>
+            </param>
+            <param name="success" type="int">
+                <description>return error/success</description>
+            </param>
+        </return>
+    </command>
+
+    <command name="readFloatArrayByStringID">
+        <description>read array of float from node</description>
+        <params>
+            <param name="handle" type="string">
+                <description>client handle</description>
+            </param>
+            <param name="ns" type="int">
+                <description>namespace by ID</description>
+            </param>
+            <param name="id" type="string">
+                <description>string node ID</description>
+            </param>
+        </params>
+        <return>
+            <param name="value" type="table" item-type="float">
+                <description>return value</description>
+            </param>
+            <param name="success" type="int">
+                <description>return error/success</description>
+            </param>
+        </return>
+    </command>
+
+    <!-- by NUMERIC node ID-->
+    <command name="readStringValueByNumericID">
+        <description>read string value from node</description>
+        <params>
+            <param name="handle" type="string">
+                <description>client handle</description>
+            </param>
+            <param name="ns" type="int">
+                <description>namespace by ID</description>
+            </param>
+            <param name="id" type="int">
+                <description>numeric node ID</description>
+            </param>
+        </params>
+        <return>
+            <param name="value" type="string">
+                <description>return value</description>
+            </param>
+            <param name="success" type="int">
+                <description>return error/success</description>
+            </param>
+        </return>
+    </command>
+
+    <command name="readIntValueByNumericID">
+        <description>read int value from node</description>
+        <params>
+            <param name="handle" type="string">
+                <description>client handle</description>
+            </param>
+            <param name="ns" type="int">
+                <description>namespace by ID</description>
+            </param>
+            <param name="id" type="int">
+                <description>numeric node ID</description>
+            </param>
+        </params>
+        <return>
+            <param name="value" type="int">
+                <description>return value</description>
+            </param>
+            <param name="success" type="int">
+                <description>return error/success</description>
+            </param>
+        </return>
+    </command>
+
+    <command name="readFloatValueByNumericID">
+        <description>read float value from node</description>
+        <params>
+            <param name="handle" type="string">
+                <description>client handle</description>
+            </param>
+            <param name="ns" type="int">
+                <description>namespace by ID</description>
+            </param>
+            <param name="id" type="int">
+                <description>numeric node ID</description>
+            </param>
+        </params>
+        <return>
+            <param name="value" type="float">
+                <description>return value</description>
+            </param>
+            <param name="success" type="int">
+                <description>return error/success</description>
+            </param>
+        </return>
+    </command>
+
+<command name="readStringArrayByNumericID">
+        <description>read array of string from node</description>
+        <params>
+            <param name="handle" type="string">
+                <description>client handle</description>
+            </param>
+            <param name="ns" type="int">
+                <description>namespace by ID</description>
+            </param>
+            <param name="id" type="int">
+                <description>numeric node ID</description>
+            </param>
+        </params>
+        <return>
+            <param name="value" type="table" item-type="string">
+                <description>return value</description>
+            </param>
+            <param name="success" type="int">
+                <description>return error/success</description>
+            </param>
+        </return>
+    </command>
+
+    <command name="readIntArrayByNumericID">
+        <description>read array of int from node</description>
+        <params>
+            <param name="handle" type="string">
+                <description>client handle</description>
+            </param>
+            <param name="ns" type="int">
+                <description>namespace by ID</description>
+            </param>
+            <param name="id" type="int">
+                <description>numeric node ID</description>
+            </param>
+        </params>
+        <return>
+            <param name="value" type="table" item-type="int">
+                <description>return value</description>
+            </param>
+            <param name="success" type="int">
+                <description>return error/success</description>
+            </param>
+        </return>
+    </command>
+
+    <command name="readFloatArrayByNumericID">
+        <description>read array of float from node</description>
+        <params>
+            <param name="handle" type="string">
+                <description>client handle</description>
+            </param>
+            <param name="ns" type="int">
+                <description>namespace by ID</description>
+            </param>
+            <param name="id" type="int">
+                <description>numeric node ID</description>
+            </param>
+        </params>
+        <return>
+            <param name="value" type="table" item-type="float">
+                <description>return value</description>
+            </param>
+            <param name="success" type="int">
+                <description>return error/success</description>
+            </param>
+        </return>
+    </command>
+
+    <!-- write commands-->
+    <!-- single values -->
+    <!-- by string ID  -->
+    <command name="writeInt16ValueByStringID">
+        <description>write int16 value to node</description>
+        <params>
+        <param name="handle" type="string">
+                <description>client handle</description>
+            </param>
+            <param name="ns" type="int">
+                <description>namespace by ID</description>
+            </param>
+            <param name="id" type="string">
+                <description>string node ID</description>
+            </param>
+            <param name="value" type="int">
+                <description>the value to be written</description>
+            </param>
+        </params>
+        <return>
+            <param name="success" type="int">
+                <description>return error/success</description>
+            </param>
+        </return>
+    </command>
+    <command name="writeInt32ValueByStringID">
+        <description>write int32 value to node</description>
+        <params>
+        <param name="handle" type="string">
+                <description>client handle</description>
+            </param>
+            <param name="ns" type="int">
+                <description>namespace by ID</description>
+            </param>
+            <param name="id" type="string">
+                <description>string node ID</description>
+            </param>
+            <param name="value" type="int">
+                <description>the value to be written</description>
+            </param>
+        </params>
+        <return>
+            <param name="success" type="int">
+                <description>return error/success</description>
+            </param>
+        </return>
+    </command>
+
+    <command name="writeInt64ValueByStringID">
+        <description>write int64 value to node</description>
+        <params>
+        <param name="handle" type="string">
+                <description>client handle</description>
+            </param>
+            <param name="ns" type="int">
+                <description>namespace by ID</description>
+            </param>
+            <param name="id" type="string">
+                <description>string node ID</description>
+            </param>
+            <param name="value" type="int">
+                <description>the value to be written</description>
+            </param>
+        </params>
+        <return>
+            <param name="success" type="int">
+                <description>return error/success</description>
+            </param>
+        </return>
+    </command>
+
+    <command name="writeUInt16ValueByStringID">
+        <description>write uint16 value to node</description>
+        <params>
+        <param name="handle" type="string">
+                <description>client handle</description>
+            </param>
+            <param name="ns" type="int">
+                <description>namespace by ID</description>
+            </param>
+            <param name="id" type="string">
+                <description>string node ID</description>
+            </param>
+            <param name="value" type="int">
+                <description>the value to be written</description>
+            </param>
+        </params>
+        <return>
+            <param name="success" type="int">
+                <description>return error/success</description>
+            </param>
+        </return>
+    </command>
+
+    <command name="writeUInt32ValueByStringID">
+        <description>write uint32 value to node</description>
+        <params>
+        <param name="handle" type="string">
+                <description>client handle</description>
+            </param>
+            <param name="ns" type="int">
+                <description>namespace by ID</description>
+            </param>
+            <param name="id" type="string">
+                <description>string node ID</description>
+            </param>
+            <param name="value" type="int">
+                <description>the value to be written</description>
+            </param>
+        </params>
+        <return>
+            <param name="success" type="int">
+                <description>return error/success</description>
+            </param>
+        </return>
+    </command>
+
+    <command name="writeUInt64ValueByStringID">
+        <description>write uint64 value to node</description>
+        <params>
+        <param name="handle" type="string">
+                <description>client handle</description>
+            </param>
+            <param name="ns" type="int">
+                <description>namespace by ID</description>
+            </param>
+            <param name="id" type="string">
+                <description>string node ID</description>
+            </param>
+            <param name="value" type="int">
+                <description>the value to be written</description>
+            </param>
+        </params>
+        <return>
+            <param name="success" type="int">
+                <description>return error/success</description>
+            </param>
+        </return>
+    </command>
+
+    <!-- by numeric ID  -->
+    <command name="writeInt16ValueByNumericID">
+        <description>write int16 value to node</description>
+        <params>
+        <param name="handle" type="string">
+                <description>client handle</description>
+            </param>
+            <param name="ns" type="int">
+                <description>namespace by ID</description>
+            </param>
+            <param name="id" type="int">
+                <description>numeric node ID</description>
+            </param>
+            <param name="value" type="int">
+                <description>the value to be written</description>
+            </param>
+        </params>
+        <return>
+            <param name="success" type="int">
+                <description>return error/success</description>
+            </param>
+        </return>
+    </command>
+    <command name="writeInt32ValueByNumericID">
+        <description>write int32 value to node</description>
+        <params>
+        <param name="handle" type="string">
+                <description>client handle</description>
+            </param>
+            <param name="ns" type="int">
+                <description>namespace by ID</description>
+            </param>
+            <param name="id" type="int">
+                <description>numeric node ID</description>
+            </param>
+            <param name="value" type="int">
+                <description>the value to be written</description>
+            </param>
+        </params>
+        <return>
+            <param name="success" type="int">
+                <description>return error/success</description>
+            </param>
+        </return>
+    </command>
+
+    <command name="writeInt64ValueByNumericID">
+        <description>write int64 value to node</description>
+        <params>
+        <param name="handle" type="string">
+                <description>client handle</description>
+            </param>
+            <param name="ns" type="int">
+                <description>namespace by ID</description>
+            </param>
+            <param name="id" type="int">
+                <description>numeric node ID</description>
+            </param>
+            <param name="value" type="int">
+                <description>the value to be written</description>
+            </param>
+        </params>
+        <return>
+            <param name="success" type="int">
+                <description>return error/success</description>
+            </param>
+        </return>
+    </command>
+
+    <command name="writeUInt16ValueByNumericID">
+        <description>write uint16 value to node</description>
+        <params>
+        <param name="handle" type="string">
+                <description>client handle</description>
+            </param>
+            <param name="ns" type="int">
+                <description>namespace by ID</description>
+            </param>
+            <param name="id" type="int">
+                <description>numeric node ID</description>
+            </param>
+            <param name="value" type="int">
+                <description>the value to be written</description>
+            </param>
+        </params>
+        <return>
+            <param name="success" type="int">
+                <description>return error/success</description>
+            </param>
+        </return>
+    </command>
+
+    <command name="writeUInt32ValueByNumericID">
+        <description>write uint32 value to node</description>
+        <params>
+        <param name="handle" type="string">
+                <description>client handle</description>
+            </param>
+            <param name="ns" type="int">
+                <description>namespace by ID</description>
+            </param>
+            <param name="id" type="int">
+                <description>numeric node ID</description>
+            </param>
+            <param name="value" type="int">
+                <description>the value to be written</description>
+            </param>
+        </params>
+        <return>
+            <param name="success" type="int">
+                <description>return error/success</description>
+            </param>
+        </return>
+    </command>
+
+    <command name="writeUInt64ValueByNumericID">
+        <description>write uint64 value to node</description>
+        <params>
+        <param name="handle" type="string">
+                <description>client handle</description>
+            </param>
+            <param name="ns" type="int">
+                <description>namespace by ID</description>
+            </param>
+            <param name="id" type="int">
+                <description>numeric node ID</description>
+            </param>
+            <param name="value" type="int">
+                <description>the value to be written</description>
+            </param>
+        </params>
+        <return>
+            <param name="success" type="int">
+                <description>return error/success</description>
+            </param>
+        </return>
+    </command>
+
+    <!-- float and double-->
+    <!-- by string ID -->
+    <command name="writeFloatValueByStringID">
+        <description>write float value to node</description>
+        <params>
+        <param name="handle" type="string">
+                <description>client handle</description>
+            </param>
+            <param name="ns" type="int">
+                <description>namespace by ID</description>
+            </param>
+            <param name="id" type="string">
+                <description>string node ID</description>
+            </param>
+            <param name="value" type="float">
+                <description>the value to be written</description>
+            </param>
+        </params>
+        <return>
+            <param name="success" type="int">
+                <description>return error/success</description>
+            </param>
+        </return>
+    </command>
+
+     <command name="writeDoubleValueByStringID">
+        <description>write double value to node</description>
+        <params>
+        <param name="handle" type="string">
+                <description>client handle</description>
+            </param>
+            <param name="ns" type="int">
+                <description>namespace by ID</description>
+            </param>
+            <param name="id" type="string">
+                <description>string node ID</description>
+            </param>
+            <param name="value" type="float">
+                <description>the value to be written</description>
+            </param>
+        </params>
+        <return>
+            <param name="success" type="int">
+                <description>return error/success</description>
+            </param>
+        </return>
+    </command>
+
+    <!-- by numeric ID -->
+    <command name="writeFloatValueByNumericID">
+        <description>write float value to node</description>
+        <params>
+        <param name="handle" type="string">
+                <description>client handle</description>
+            </param>
+            <param name="ns" type="int">
+                <description>namespace by ID</description>
+            </param>
+            <param name="id" type="int">
+                <description>numeric node ID</description>
+            </param>
+            <param name="value" type="float">
+                <description>the value to be written</description>
+            </param>
+        </params>
+        <return>
+            <param name="success" type="int">
+                <description>return error/success</description>
+            </param>
+        </return>
+    </command>
+
+     <command name="writeDoubleValueByNumericID">
+        <description>write double value to node</description>
+        <params>
+        <param name="handle" type="string">
+                <description>client handle</description>
+            </param>
+            <param name="ns" type="int">
+                <description>namespace by ID</description>
+            </param>
+            <param name="id" type="int">
+                <description>numeric node ID</description>
+            </param>
+            <param name="value" type="float">
+                <description>the value to be written</description>
+            </param>
+        </params>
+        <return>
+            <param name="success" type="int">
+                <description>return error/success</description>
+            </param>
+        </return>
+    </command>
+
+    <!--array writes-->
+    <!--by string ID-->
+    <!--int-->
+    <command name="writeInt16ArrayByStringID">
+        <description>write array of int16 to node</description>
+        <params>
+        <param name="handle" type="string">
+                <description>client handle</description>
+            </param>
+            <param name="ns" type="int">
+                <description>namespace by ID</description>
+            </param>
+            <param name="id" type="string">
+                <description>string node ID</description>
+            </param>
+            <param name="value" type="table" item-type="int">
+                <description>the flattened array to be written</description>
+            </param>
+            <param name="dimensions" type="table" item-type="int">
+                <description>(target) array dimension</description>
+            </param>
+        </params>
+        <return>
+            <param name="success" type="int">
+                <description>return error/success</description>
+            </param>
+        </return>
+    </command>
+
+    <command name="writeInt32ArrayByStringID">
+        <description>write array of int32 to node</description>
+        <params>
+        <param name="handle" type="string">
+                <description>client handle</description>
+            </param>
+            <param name="ns" type="int">
+                <description>namespace by ID</description>
+            </param>
+            <param name="id" type="string">
+                <description>string node ID</description>
+            </param>
+            <param name="value" type="table" item-type="int">
+                <description>the flattened array to be written</description>
+            </param>
+            <param name="dimensions" type="table" item-type="int">
+                <description>(target) array dimension</description>
+            </param>
+        </params>
+        <return>
+            <param name="success" type="int">
+                <description>return error/success</description>
+            </param>
+        </return>
+    </command>
+
+    <command name="writeInt64ArrayByStringID">
+        <description>write array of int64 to node</description>
+        <params>
+        <param name="handle" type="string">
+                <description>client handle</description>
+            </param>
+            <param name="ns" type="int">
+                <description>namespace by ID</description>
+            </param>
+            <param name="id" type="string">
+                <description>string node ID</description>
+            </param>
+            <param name="value" type="table" item-type="int">
+                <description>the flattened array to be written</description>
+            </param>
+            <param name="dimensions" type="table" item-type="int">
+                <description>(target) array dimension</description>
+            </param>
+        </params>
+        <return>
+            <param name="success" type="int">
+                <description>return error/success</description>
+            </param>
+        </return>
+    </command>
+
+    <command name="writeUInt16ArrayByStringID">
+        <description>write array of uint16 to node</description>
+        <params>
+        <param name="handle" type="string">
+                <description>client handle</description>
+            </param>
+            <param name="ns" type="int">
+                <description>namespace by ID</description>
+            </param>
+            <param name="id" type="string">
+                <description>string node ID</description>
+            </param>
+            <param name="value" type="table" item-type="int">
+                <description>the flattened array to be written</description>
+            </param>
+            <param name="dimensions" type="table" item-type="int">
+                <description>(target) array dimension</description>
+            </param>
+        </params>
+        <return>
+            <param name="success" type="int">
+                <description>return error/success</description>
+            </param>
+        </return>
+    </command>
+
+    <command name="writeUInt32ArrayByStringID">
+        <description>write array of uint32 to node</description>
+        <params>
+        <param name="handle" type="string">
+                <description>client handle</description>
+            </param>
+            <param name="ns" type="int">
+                <description>namespace by ID</description>
+            </param>
+            <param name="id" type="string">
+                <description>string node ID</description>
+            </param>
+            <param name="value" type="table" item-type="int">
+                <description>the flattened array to be written</description>
+            </param>
+            <param name="dimensions" type="table" item-type="int">
+                <description>(target) array dimension</description>
+            </param>
+        </params>
+        <return>
+            <param name="success" type="int">
+                <description>return error/success</description>
+            </param>
+        </return>
+    </command>
+
+    <command name="writeUInt64ArrayByStringID">
+        <description>write array of uint64 to node</description>
+        <params>
+        <param name="handle" type="string">
+                <description>client handle</description>
+            </param>
+            <param name="ns" type="int">
+                <description>namespace by ID</description>
+            </param>
+            <param name="id" type="string">
+                <description>string node ID</description>
+            </param>
+            <param name="value" type="table" item-type="int">
+                <description>the flattened array to be written</description>
+            </param>
+            <param name="dimensions" type="table" item-type="int">
+                <description>(target) array dimension</description>
+            </param>
+        </params>
+        <return>
+            <param name="success" type="int">
+                <description>return error/success</description>
+            </param>
+        </return>
+    </command>
+    <!-- float/double-->
+    <command name="writeFloatArrayByStringID">
+        <description>write array of float to node</description>
+        <params>
+        <param name="handle" type="string">
+                <description>client handle</description>
+            </param>
+            <param name="ns" type="int">
+                <description>namespace by ID</description>
+            </param>
+            <param name="id" type="string">
+                <description>string node ID</description>
+            </param>
+            <param name="value" type="table" item-type="float">
+                <description>the flattened array to be written</description>
+            </param>
+            <param name="dimensions" type="table" item-type="int">
+                <description>(target) array dimension</description>
+            </param>
+        </params>
+        <return>
+            <param name="success" type="int">
+                <description>return error/success</description>
+            </param>
+        </return>
+    </command>
+
+    <command name="writeDoubleArrayByStringID">
+        <description>write array of double to node</description>
+        <params>
+        <param name="handle" type="string">
+                <description>client handle</description>
+            </param>
+            <param name="ns" type="int">
+                <description>namespace by ID</description>
+            </param>
+            <param name="id" type="string">
+                <description>string node ID</description>
+            </param>
+            <param name="value" type="table" item-type="float">
+                <description>the flattened array to be written</description>
+            </param>
+            <param name="dimensions" type="table" item-type="int">
+                <description>(target) array dimension</description>
+            </param>
+        </params>
+        <return>
+            <param name="success" type="int">
+                <description>return error/success</description>
+            </param>
+        </return>
+    </command>
+
+    <!--by numeric ID-->
+    <!--int-->
+    <command name="writeInt16ArrayByNumericID">
+        <description>write array of int16 to node</description>
+        <params>
+        <param name="handle" type="string">
+                <description>client handle</description>
+            </param>
+            <param name="ns" type="int">
+                <description>namespace by ID</description>
+            </param>
+            <param name="id" type="int">
+                <description>numeric node ID</description>
+            </param>
+            <param name="value" type="table" item-type="int">
+                <description>the flattened array to be written</description>
+            </param>
+            <param name="dimensions" type="table" item-type="int">
+                <description>(target) array dimension</description>
+            </param>
+        </params>
+        <return>
+            <param name="success" type="int">
+                <description>return error/success</description>
+            </param>
+        </return>
+    </command>
+
+    <command name="writeInt32ArrayByNumericID">
+        <description>write array of int32 to node</description>
+        <params>
+        <param name="handle" type="string">
+                <description>client handle</description>
+            </param>
+            <param name="ns" type="int">
+                <description>namespace by ID</description>
+            </param>
+            <param name="id" type="int">
+                <description>numeric node ID</description>
+            </param>
+            <param name="value" type="table" item-type="int">
+                <description>the flattened array to be written</description>
+            </param>
+            <param name="dimensions" type="table" item-type="int">
+                <description>(target) array dimension</description>
+            </param>
+        </params>
+        <return>
+            <param name="success" type="int">
+                <description>return error/success</description>
+            </param>
+        </return>
+    </command>
+
+    <command name="writeInt64ArrayByNumericID">
+        <description>write array of int64 to node</description>
+        <params>
+        <param name="handle" type="string">
+                <description>client handle</description>
+            </param>
+            <param name="ns" type="int">
+                <description>namespace by ID</description>
+            </param>
+            <param name="id" type="int">
+                <description>numeric node ID</description>
+            </param>
+            <param name="value" type="table" item-type="int">
+                <description>the flattened array to be written</description>
+            </param>
+            <param name="dimensions" type="table" item-type="int">
+                <description>(target) array dimension</description>
+            </param>
+        </params>
+        <return>
+            <param name="success" type="int">
+                <description>return error/success</description>
+            </param>
+        </return>
+    </command>
+
+    <command name="writeUInt16ArrayByNumericID">
+        <description>write array of uint16 to node</description>
+        <params>
+        <param name="handle" type="string">
+                <description>client handle</description>
+            </param>
+            <param name="ns" type="int">
+                <description>namespace by ID</description>
+            </param>
+            <param name="id" type="int">
+                <description>numeric node ID</description>
+            </param>
+            <param name="value" type="table" item-type="int">
+                <description>the flattened array to be written</description>
+            </param>
+            <param name="dimensions" type="table" item-type="int">
+                <description>(target) array dimension</description>
+            </param>
+        </params>
+        <return>
+            <param name="success" type="int">
+                <description>return error/success</description>
+            </param>
+        </return>
+    </command>
+
+    <command name="writeUInt32ArrayByNumericID">
+        <description>write array of uint32 to node</description>
+        <params>
+        <param name="handle" type="string">
+                <description>client handle</description>
+            </param>
+            <param name="ns" type="int">
+                <description>namespace by ID</description>
+            </param>
+            <param name="id" type="int">
+                <description>numeric node ID</description>
+            </param>
+            <param name="value" type="table" item-type="int">
+                <description>the flattened array to be written</description>
+            </param>
+            <param name="dimensions" type="table" item-type="int">
+                <description>(target) array dimension</description>
+            </param>
+        </params>
+        <return>
+            <param name="success" type="int">
+                <description>return error/success</description>
+            </param>
+        </return>
+    </command>
+
+    <command name="writeUInt64ArrayByNumericID">
+        <description>write array of uint64 to node</description>
+        <params>
+        <param name="handle" type="string">
+                <description>client handle</description>
+            </param>
+            <param name="ns" type="int">
+                <description>namespace by ID</description>
+            </param>
+            <param name="id" type="int">
+                <description>numeric node ID</description>
+            </param>
+            <param name="value" type="table" item-type="int">
+                <description>the flattened array to be written</description>
+            </param>
+            <param name="dimensions" type="table" item-type="int">
+                <description>(target) array dimension</description>
+            </param>
+        </params>
+        <return>
+            <param name="success" type="int">
+                <description>return error/success</description>
+            </param>
+        </return>
+    </command>
+    <!-- float/double-->
+    <command name="writeFloatArrayByNumericID">
+        <description>write array of float to node</description>
+        <params>
+        <param name="handle" type="string">
+                <description>client handle</description>
+            </param>
+            <param name="ns" type="int">
+                <description>namespace by ID</description>
+            </param>
+            <param name="id" type="int">
+                <description>numeric node ID</description>
+            </param>
+            <param name="value" type="table" item-type="float">
+                <description>the flattened array to be written</description>
+            </param>
+            <param name="dimensions" type="table" item-type="int">
+                <description>(target) array dimension</description>
+            </param>
+        </params>
+        <return>
+            <param name="success" type="int">
+                <description>return error/success</description>
+            </param>
+        </return>
+    </command>
+
+    <command name="writeDoubleArrayByNumericID">
+        <description>write array of double to node</description>
+        <params>
+        <param name="handle" type="string">
+                <description>client handle</description>
+            </param>
+            <param name="ns" type="int">
+                <description>namespace by ID</description>
+            </param>
+            <param name="id" type="int">
+                <description>numeric node ID</description>
+            </param>
+            <param name="value" type="table" item-type="float">
+                <description>the flattened array to be written</description>
+            </param>
+            <param name="dimensions" type="table" item-type="int">
+                <description>(target) array dimension</description>
+            </param>
+        </params>
+        <return>
+            <param name="success" type="int">
+                <description>return error/success</description>
+            </param>
+        </return>
+    </command>
+
+    <!-- booleans -->
+    <!-- single value r/w -->
+    <command name="readBoolValueByStringID">
+        <description>read bool value from node</description>
+        <params>
+        <param name="handle" type="string">
+                <description>client handle</description>
+            </param>
+            <param name="ns" type="int">
+                <description>namespace by ID</description>
+            </param>
+            <param name="id" type="string">
+                <description>string node ID</description>
+            </param>
+        </params>
+        <return>
+            <param name="value" type="bool">
+                <description>requested data</description>
+            </param>
+            <param name="success" type="int">
+                <description>return error/success</description>
+            </param>
+        </return>
+    </command>
+    <command name="readBoolValueByNumericID">
+        <description>read bool value from node</description>
+        <params>
+        <param name="handle" type="string">
+                <description>client handle</description>
+            </param>
+            <param name="ns" type="int">
+                <description>namespace by ID</description>
+            </param>
+            <param name="id" type="int">
+                <description>numeric node ID</description>
+            </param>
+        </params>
+        <return>
+            <param name="value" type="bool">
+                <description>requested data</description>
+            </param>
+            <param name="success" type="int">
+                <description>return error/success</description>
+            </param>
+        </return>
+    </command>
+
+    <command name="writeBoolValueByStringID">
+        <description>write bool value to node</description>
+        <params>
+        <param name="handle" type="string">
+                <description>client handle</description>
+            </param>
+            <param name="ns" type="int">
+                <description>namespace by ID</description>
+            </param>
+            <param name="id" type="string">
+                <description>string node ID</description>
+            </param>
+            <param name="value" type="bool">
+                <description>the boolean to be written</description>
+            </param>
+        </params>
+        <return>
+            <param name="success" type="int">
+                <description>return error/success</description>
+            </param>
+        </return>
+    </command>
+    <command name="writeBoolValueByNumericID">
+        <description>write bool value to node</description>
+        <params>
+        <param name="handle" type="string">
+                <description>client handle</description>
+            </param>
+            <param name="ns" type="int">
+                <description>namespace by ID</description>
+            </param>
+            <param name="id" type="int">
+                <description>numeric node ID</description>
+            </param>
+            <param name="value" type="bool">
+                <description>the boolean to be written</description>
+            </param>
+        </params>
+        <return>
+            <param name="success" type="int">
+                <description>return error/success</description>
+            </param>
+        </return>
+    </command>
+
+    <!-- array r/w -->
+    <command name="readBoolArrayByStringID">
+        <description>write array of bool to node</description>
+        <params>
+        <param name="handle" type="string">
+                <description>client handle</description>
+            </param>
+            <param name="ns" type="int">
+                <description>namespace by ID</description>
+            </param>
+            <param name="id" type="string">
+                <description>string node ID</description>
+            </param>
+        </params>
+        <return>
+            <param name="value" type="table" item-type="bool">
+                <description>returned data, flattened array</description>
+            </param>
+            <param name="success" type="int">
+                <description>return error/success</description>
+            </param>
+        </return>
+    </command>
+    <command name="readBoolArrayByNumericID">
+        <description>read array of bool from node</description>
+        <params>
+        <param name="handle" type="string">
+                <description>client handle</description>
+            </param>
+            <param name="ns" type="int">
+                <description>namespace by ID</description>
+            </param>
+            <param name="id" type="int">
+                <description>numeric node ID</description>
+            </param>
+        </params>
+        <return>
+            <param name="value" type="table" item-type="bool">
+                <description>returned data, flattened array</description>
+            </param>
+            <param name="success" type="int">
+                <description>return error/success</description>
+            </param>
+        </return>
+    </command>
+    <command name="writeBoolArrayByStringID">
+        <description>write array of bool to node</description>
+        <params>
+        <param name="handle" type="string">
+                <description>client handle</description>
+            </param>
+            <param name="ns" type="int">
+                <description>namespace by ID</description>
+            </param>
+            <param name="id" type="string">
+                <description>string node ID</description>
+            </param>
+            <param name="value" type="table" item-type="bool">
+                <description>the flattened array to be written</description>
+            </param>
+            <param name="dimensions" type="table" item-type="int">
+                <description>(target) array dimension</description>
+            </param>
+        </params>
+        <return>
+            <param name="success" type="int">
+                <description>return error/success</description>
+            </param>
+        </return>
+    </command>
+    <command name="writeBoolArrayByNumericID">
+        <description>write array of bool to node</description>
+        <params>
+        <param name="handle" type="string">
+                <description>client handle</description>
+            </param>
+            <param name="ns" type="int">
+                <description>namespace by ID</description>
+            </param>
+            <param name="id" type="int">
+                <description>numeric node ID</description>
+            </param>
+            <param name="value" type="table" item-type="bool">
+                <description>the flattened array to be written</description>
+            </param>
+            <param name="dimensions" type="table" item-type="int">
+                <description>(target) array dimension</description>
+            </param>
+        </params>
+        <return>
+            <param name="success" type="int">
+                <description>return error/success</description>
+            </param>
+        </return>
+    </command>
+    <!-- byte, aka USInt, short, etc. -->
+    <!-- single value r/w -->
+    <command name="readByteValueByStringID">
+        <description>read byte value from node</description>
+        <params>
+        <param name="handle" type="string">
+                <description>client handle</description>
+            </param>
+            <param name="ns" type="int">
+                <description>namespace by ID</description>
+            </param>
+            <param name="id" type="string">
+                <description>string node ID</description>
+            </param>
+        </params>
+        <return>
+            <param name="value" type="int">
+                <description>requested data</description>
+            </param>
+            <param name="success" type="int">
+                <description>return error/success</description>
+            </param>
+        </return>
+    </command>
+    <command name="readByteValueByNumericID">
+        <description>read byte value from node</description>
+        <params>
+        <param name="handle" type="string">
+                <description>client handle</description>
+            </param>
+            <param name="ns" type="int">
+                <description>namespace by ID</description>
+            </param>
+            <param name="id" type="int">
+                <description>numeric node ID</description>
+            </param>
+        </params>
+        <return>
+            <param name="value" type="int">
+                <description>requested data</description>
+            </param>
+            <param name="success" type="int">
+                <description>return error/success</description>
+            </param>
+        </return>
+    </command>
+
+    <command name="writeByteValueByStringID">
+        <description>write byte value to node</description>
+        <params>
+        <param name="handle" type="string">
+                <description>client handle</description>
+            </param>
+            <param name="ns" type="int">
+                <description>namespace by ID</description>
+            </param>
+            <param name="id" type="string">
+                <description>string node ID</description>
+            </param>
+            <param name="value" type="int">
+                <description>the data to be written</description>
+            </param>
+        </params>
+        <return>
+            <param name="success" type="int">
+                <description>return error/success</description>
+            </param>
+        </return>
+    </command>
+    <command name="writeByteValueByNumericID">
+        <description>write byte value to node</description>
+        <params>
+        <param name="handle" type="string">
+                <description>client handle</description>
+            </param>
+            <param name="ns" type="int">
+                <description>namespace by ID</description>
+            </param>
+            <param name="id" type="int">
+                <description>numeric node ID</description>
+            </param>
+            <param name="value" type="int">
+                <description>the data to be written</description>
+            </param>
+        </params>
+        <return>
+            <param name="success" type="int">
+                <description>return error/success</description>
+            </param>
+        </return>
+    </command>
+
+    <!-- array r/w -->
+    <command name="readByteArrayByStringID">
+        <description>write array of byte to node</description>
+        <params>
+        <param name="handle" type="string">
+                <description>client handle</description>
+            </param>
+            <param name="ns" type="int">
+                <description>namespace by ID</description>
+            </param>
+            <param name="id" type="string">
+                <description>string node ID</description>
+            </param>
+        </params>
+        <return>
+            <param name="value" type="table" item-type="int">
+                <description>returned data, flattened array</description>
+            </param>
+            <param name="success" type="int">
+                <description>return error/success</description>
+            </param>
+        </return>
+    </command>
+    <command name="readByteArrayByNumericID">
+        <description>read array of byte from node</description>
+        <params>
+        <param name="handle" type="string">
+                <description>client handle</description>
+            </param>
+            <param name="ns" type="int">
+                <description>namespace by ID</description>
+            </param>
+            <param name="id" type="int">
+                <description>numeric node ID</description>
+            </param>
+        </params>
+        <return>
+            <param name="value" type="table" item-type="int">
+                <description>returned data, flattened array</description>
+            </param>
+            <param name="success" type="int">
+                <description>return error/success</description>
+            </param>
+        </return>
+    </command>
+    <command name="writeByteArrayByStringID">
+        <description>write array of byte to node</description>
+        <params>
+        <param name="handle" type="string">
+                <description>client handle</description>
+            </param>
+            <param name="ns" type="int">
+                <description>namespace by ID</description>
+            </param>
+            <param name="id" type="string">
+                <description>string node ID</description>
+            </param>
+            <param name="value" type="table" item-type="int">
+                <description>the flattened array to be written</description>
+            </param>
+            <param name="dimensions" type="table" item-type="int">
+                <description>(target) array dimension</description>
+            </param>
+        </params>
+        <return>
+            <param name="success" type="int">
+                <description>return error/success</description>
+            </param>
+        </return>
+    </command>
+    <command name="writeByteArrayByNumericID">
+        <description>write array of byte to node</description>
+        <params>
+        <param name="handle" type="string">
+                <description>client handle</description>
+            </param>
+            <param name="ns" type="int">
+                <description>namespace by ID</description>
+            </param>
+            <param name="id" type="int">
+                <description>numeric node ID</description>
+            </param>
+            <param name="value" type="table" item-type="int">
+                <description>the flattened array to be written</description>
+            </param>
+            <param name="dimensions" type="table" item-type="int">
+                <description>(target) array dimension</description>
+            </param>
+        </params>
+        <return>
+            <param name="success" type="int">
+                <description>return error/success</description>
+            </param>
+        </return>
+    </command>
+    <!-- write string arrays-->
+    <command name="writeStringArrayByStringID">
+        <description>write array of byte to node</description>
+        <params>
+        <param name="handle" type="string">
+                <description>client handle</description>
+            </param>
+            <param name="ns" type="int">
+                <description>namespace by ID</description>
+            </param>
+            <param name="id" type="string">
+                <description>string node ID</description>
+            </param>
+            <param name="value" type="table" item-type="string">
+                <description>the flattened array to be written</description>
+            </param>
+            <param name="dimensions" type="table" item-type="int">
+                <description>(target) array dimension</description>
+            </param>
+        </params>
+        <return>
+            <param name="success" type="int">
+                <description>return error/success</description>
+            </param>
+        </return>
+    </command>
+
+    <command name="writeStringArrayByNumericID">
+        <description>write array of byte to node</description>
+        <params>
+        <param name="handle" type="string">
+                <description>client handle</description>
+            </param>
+            <param name="ns" type="int">
+                <description>namespace by ID</description>
+            </param>
+            <param name="id" type="int">
+                <description>numeric node ID</description>
+            </param>
+            <param name="value" type="table" item-type="string">
+                <description>the flattened array to be written</description>
+            </param>
+            <param name="dimensions" type="table" item-type="int">
+                <description>(target) array dimension</description>
+            </param>
+        </params>
+        <return>
+            <param name="success" type="int">
+                <description>return error/success</description>
+            </param>
+        </return>
+    </command>
+
+    <command name="writeStringValueByStringID">
+        <description>write array of byte to node</description>
+        <params>
+        <param name="handle" type="string">
+                <description>client handle</description>
+            </param>
+            <param name="ns" type="int">
+                <description>namespace by ID</description>
+            </param>
+            <param name="id" type="string">
+                <description>string node ID</description>
+            </param>
+            <param name="value" type="string">
+                <description>value to be written</description>
+            </param>
+        </params>
+        <return>
+            <param name="success" type="int">
+                <description>return error/success</description>
+            </param>
+        </return>
+    </command>
+
+    <command name="writeStringValueByNumericID">
+        <description>write array of byte to node</description>
+        <params>
+        <param name="handle" type="string">
+                <description>client handle</description>
+            </param>
+            <param name="ns" type="int">
+                <description>namespace by ID</description>
+            </param>
+            <param name="id" type="int">
+                <description>numeric node ID</description>
+            </param>
+            <param name="value" type="string">
+                <description>value to be written</description>
+            </param>
+        </params>
+        <return>
+            <param name="success" type="int">
+                <description>return error/success</description>
+            </param>
+        </return>
+    </command>
+
+    <!-- browsing-->
+    <command name="browseByNumericID">
+        <description>browse a node by numeric ID</description>
+        <params>
+        <param name="handle" type="string">
+                <description>client handle</description>
+            </param>
+            <param name="ns" type="int">
+                <description>namespace by ID</description>
+            </param>
+            <param name="id" type="int">
+                <description>numeric node ID</description>
+            </param>
+        </params>
+        <return>
+            <param name="response" type="table" item-type="string">
+                <description>return value - jagged table with strings</description>
+            </param> 
+            <param name="success" type="int">
+                <description>return error/success</description>
+            </param>
+        </return>
+    </command>
+    <command name="browseByStringID">
+        <description>browse a node by numeric ID</description>
+        <params>
+        <param name="handle" type="string">
+                <description>client handle</description>
+            </param>
+            <param name="ns" type="int">
+                <description>namespace by ID</description>
+            </param>
+            <param name="id" type="string">
+                <description>string node ID</description>
+            </param>
+        </params>
+        <return>
+            <param name="response" type="table" item-type="string">
+                <description>return value - jagged table with strings</description>
+            </param> 
+            <param name="success" type="int">
+                <description>return error/success</description>
+            </param>
+        </return>
+    </command>
+
+
+    <!--command name="readNodeValueString">
+        <description>read string value from node</description>
+        <params>
+            <param name="handle" type="string">
+                <description>client handle</description>
+            </param>
+            <param name="ns" type="int">
+                <description>namespace by ID</description>
+            </param>
+            <param name="id" type="string">
+                <description>string node ID</description>
+            </param>
+        </params>
+        <return>
+            <param name="value" type="string">
+                <description>return value</description>
+            </param>
+            <param name="success" type="int">
+                <description>return error/success</description>
+            </param>
+        </return>
+    </command-->
+    <!--command name="readNodeAttribute">
+        <description>test if ua types work</description>
+        <params>
+            <param name="client" type="UA_Client">
+            </param>
+            <param name="nodeId" type="UA_NodeId">
+            </param>
+            <param name="outNodeId" type="UA_NodeId">
+            </param>
+        </params>
+        <return>
+            <param name="retval" type="UA_StatusCode">
+                <description>return value</description>
+            </param>
+        </return>
+    </command-->
+</plugin>
